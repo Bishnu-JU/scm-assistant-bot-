@@ -1,0 +1,311 @@
+{
+  "nodes": [
+    {
+      "id": "conversationalRetrievalQAChain_0",
+      "position": {
+        "x": 822,
+        "y": 205
+      },
+      "type": "customNode",
+      "data": {
+        "id": "conversationalRetrievalQAChain_0",
+        "label": "Conversational Retrieval QA Chain",
+        "version": 3,
+        "name": "conversationalRetrievalQAChain",
+        "type": "ConversationalRetrievalQAChain",
+        "baseClasses": [
+          "ConversationalRetrievalQAChain",
+          "BaseChain",
+          "Runnable"
+        ],
+        "category": "Chains",
+        "description": "Document QA - built on RetrievalQAChain to provide a chat history component",
+        "inputParams": [
+          {
+            "label": "Return Source Documents",
+            "name": "returnSourceDocuments",
+            "type": "boolean",
+            "optional": true,
+            "id": "conversationalRetrievalQAChain_0-input-returnSourceDocuments-boolean",
+            "display": true
+          },
+          {
+            "label": "Rephrase Prompt",
+            "name": "rephrasePrompt",
+            "type": "string",
+            "description": "Using previous chat history, rephrase question into a standalone question",
+            "warning": "Prompt must include input variables: {chat_history} and {question}",
+            "rows": 4,
+            "additionalParams": true,
+            "optional": true,
+            "default": "Given the following conversation and a follow up question, rephrase the follow up question to be a standalone question.\n\nChat History:\n{chat_history}\nFollow Up Input: {question}\nStandalone Question:",
+            "id": "conversationalRetrievalQAChain_0-input-rephrasePrompt-string",
+            "display": true
+          },
+          {
+            "label": "Response Prompt",
+            "name": "responsePrompt",
+            "type": "string",
+            "description": "Taking the rephrased question, search for answer from the provided context",
+            "warning": "Prompt must include input variable: {context}",
+            "rows": 4,
+            "additionalParams": true,
+            "optional": true,
+            "default": "I want you to act as a document that I am having a conversation with. Your name is \"AI Assistant\". Using the provided context, answer the user's question to the best of your ability using the resources provided.\nIf there is nothing in the context relevant to the question at hand, just say \"Hmm, I'm not sure\" and stop after that. Refuse to answer any question not about the info. Never break character.\n------------\n{context}\n------------\nREMEMBER: If there is no relevant information within the context, just say \"Hmm, I'm not sure\". Don't try to make up an answer. Never break character.",
+            "id": "conversationalRetrievalQAChain_0-input-responsePrompt-string",
+            "display": true
+          }
+        ],
+        "inputAnchors": [
+          {
+            "label": "Chat Model",
+            "name": "model",
+            "type": "BaseChatModel",
+            "id": "conversationalRetrievalQAChain_0-input-model-BaseChatModel",
+            "display": true
+          },
+          {
+            "label": "Vector Store Retriever",
+            "name": "vectorStoreRetriever",
+            "type": "BaseRetriever",
+            "id": "conversationalRetrievalQAChain_0-input-vectorStoreRetriever-BaseRetriever",
+            "display": true
+          },
+          {
+            "label": "Memory",
+            "name": "memory",
+            "type": "BaseMemory",
+            "optional": true,
+            "description": "If left empty, a default BufferMemory will be used",
+            "id": "conversationalRetrievalQAChain_0-input-memory-BaseMemory",
+            "display": true
+          },
+          {
+            "label": "Input Moderation",
+            "description": "Detect text that could generate harmful output and prevent it from being sent to the language model",
+            "name": "inputModeration",
+            "type": "Moderation",
+            "optional": true,
+            "list": true,
+            "id": "conversationalRetrievalQAChain_0-input-inputModeration-Moderation",
+            "display": true
+          }
+        ],
+        "inputs": {
+          "model": "{{chatCohere_0.data.instance}}",
+          "vectorStoreRetriever": "{{documentStoreVS_0.data.instance}}",
+          "memory": "",
+          "returnSourceDocuments": "",
+          "rephrasePrompt": "Given the following conversation and a follow up question, rephrase the follow up question to be a standalone question.\n\nChat History:\n{chat_history}\nFollow Up Input: {question}\nStandalone Question:",
+          "responsePrompt": "I want you to act as a document that I am having a conversation with. Your name is \"AI Assistant\". Using the provided context, answer the user's question to the best of your ability using the resources provided.\nIf there is nothing in the context relevant to the question at hand, just say \"Hmm, I'm not sure\" and stop after that. Refuse to answer any question not about the info. Never break character.\n------------\n{context}\n------------\nREMEMBER: If there is no relevant information within the context, just say \"Hmm, I'm not sure\". Don't try to make up an answer. Never break character.",
+          "inputModeration": ""
+        },
+        "outputAnchors": [
+          {
+            "id": "conversationalRetrievalQAChain_0-output-conversationalRetrievalQAChain-ConversationalRetrievalQAChain|BaseChain|Runnable",
+            "name": "conversationalRetrievalQAChain",
+            "label": "ConversationalRetrievalQAChain",
+            "description": "Document QA - built on RetrievalQAChain to provide a chat history component",
+            "type": "ConversationalRetrievalQAChain | BaseChain | Runnable"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 536,
+      "positionAbsolute": {
+        "x": 822,
+        "y": 205
+      },
+      "selected": false
+    },
+    {
+      "id": "documentStoreVS_0",
+      "position": {
+        "x": -719.0223365639378,
+        "y": 751.1708192477794
+      },
+      "type": "customNode",
+      "data": {
+        "id": "documentStoreVS_0",
+        "label": "Document Store (Vector)",
+        "version": 1,
+        "name": "documentStoreVS",
+        "type": "DocumentStoreVS",
+        "baseClasses": [
+          "DocumentStoreVS"
+        ],
+        "category": "Vector Stores",
+        "description": "Search and retrieve documents from Document Store",
+        "inputParams": [
+          {
+            "label": "Select Store",
+            "name": "selectedStore",
+            "type": "asyncOptions",
+            "loadMethod": "listStores",
+            "id": "documentStoreVS_0-input-selectedStore-asyncOptions",
+            "display": true
+          }
+        ],
+        "inputAnchors": [],
+        "inputs": {
+          "selectedStore": "e1d65c21-eeb5-4c81-941b-dc885bc47427"
+        },
+        "outputAnchors": [
+          {
+            "name": "output",
+            "label": "Output",
+            "type": "options",
+            "description": "",
+            "options": [
+              {
+                "id": "documentStoreVS_0-output-retriever-BaseRetriever",
+                "name": "retriever",
+                "label": "Retriever",
+                "description": "",
+                "type": "BaseRetriever"
+              },
+              {
+                "id": "documentStoreVS_0-output-vectorStore-VectorStore",
+                "name": "vectorStore",
+                "label": "Vector Store",
+                "description": "",
+                "type": "VectorStore"
+              }
+            ],
+            "default": "retriever"
+          }
+        ],
+        "outputs": {
+          "output": "retriever"
+        },
+        "selected": false
+      },
+      "width": 300,
+      "height": 317,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": -719.0223365639378,
+        "y": 751.1708192477794
+      }
+    },
+    {
+      "id": "chatCohere_0",
+      "position": {
+        "x": -179.64847195910468,
+        "y": 157.39319728752352
+      },
+      "type": "customNode",
+      "data": {
+        "id": "chatCohere_0",
+        "label": "Cohere",
+        "version": 3,
+        "name": "chatCohere",
+        "type": "ChatCohere",
+        "baseClasses": [
+          "ChatCohere",
+          "BaseChatModel",
+          "BaseLanguageModel",
+          "Runnable"
+        ],
+        "category": "Chat Models",
+        "description": "Wrapper around Cohere Chat Endpoints",
+        "inputParams": [
+          {
+            "label": "Connect Credential",
+            "name": "credential",
+            "type": "credential",
+            "credentialNames": [
+              "cohereApi"
+            ],
+            "id": "chatCohere_0-input-credential-credential",
+            "display": true
+          },
+          {
+            "label": "Model Name",
+            "name": "modelName",
+            "type": "asyncOptions",
+            "loadMethod": "listModels",
+            "default": "command-r7b-12-2024",
+            "id": "chatCohere_0-input-modelName-asyncOptions",
+            "display": true
+          },
+          {
+            "label": "Temperature",
+            "name": "temperature",
+            "type": "number",
+            "step": 0.1,
+            "default": 0.7,
+            "optional": true,
+            "id": "chatCohere_0-input-temperature-number",
+            "display": true
+          },
+          {
+            "label": "Streaming",
+            "name": "streaming",
+            "type": "boolean",
+            "default": true,
+            "optional": true,
+            "id": "chatCohere_0-input-streaming-boolean",
+            "display": true
+          }
+        ],
+        "inputAnchors": [
+          {
+            "label": "Cache",
+            "name": "cache",
+            "type": "BaseCache",
+            "optional": true,
+            "id": "chatCohere_0-input-cache-BaseCache",
+            "display": true
+          }
+        ],
+        "inputs": {
+          "cache": "",
+          "modelName": "command-a-03-2025",
+          "temperature": "0.4",
+          "streaming": true
+        },
+        "outputAnchors": [
+          {
+            "id": "chatCohere_0-output-chatCohere-ChatCohere|BaseChatModel|BaseLanguageModel|Runnable",
+            "name": "chatCohere",
+            "label": "ChatCohere",
+            "description": "Wrapper around Cohere Chat Endpoints",
+            "type": "ChatCohere | BaseChatModel | BaseLanguageModel | Runnable"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 623,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": -179.64847195910468,
+        "y": 157.39319728752352
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "documentStoreVS_0",
+      "sourceHandle": "documentStoreVS_0-output-retriever-BaseRetriever",
+      "target": "conversationalRetrievalQAChain_0",
+      "targetHandle": "conversationalRetrievalQAChain_0-input-vectorStoreRetriever-BaseRetriever",
+      "type": "buttonedge",
+      "id": "documentStoreVS_0-documentStoreVS_0-output-retriever-BaseRetriever-conversationalRetrievalQAChain_0-conversationalRetrievalQAChain_0-input-vectorStoreRetriever-BaseRetriever"
+    },
+    {
+      "source": "chatCohere_0",
+      "sourceHandle": "chatCohere_0-output-chatCohere-ChatCohere|BaseChatModel|BaseLanguageModel|Runnable",
+      "target": "conversationalRetrievalQAChain_0",
+      "targetHandle": "conversationalRetrievalQAChain_0-input-model-BaseChatModel",
+      "type": "buttonedge",
+      "id": "chatCohere_0-chatCohere_0-output-chatCohere-ChatCohere|BaseChatModel|BaseLanguageModel|Runnable-conversationalRetrievalQAChain_0-conversationalRetrievalQAChain_0-input-model-BaseChatModel"
+    }
+  ]
+}
