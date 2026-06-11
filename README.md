@@ -108,7 +108,7 @@ All setup screenshots are available in the [`/screenshots`](./screenshots) folde
 
 ## 🔧 What I Would Improve
 
-- **Better CSV handling** — Convert raw CSV to structured text format per supplier for improved RAG retrieval accuracy
+- **Better CSV handling** — Model is not able to retrive data from csv. Convert raw CSV to structured text format per supplier for improved RAG retrieval accuracy
 - **Paid embedding model** — Use OpenAI `text-embedding-3-large` for higher dimensional embeddings and better semantic search
 - **Add conversation memory** — Enable Buffer Memory node so the chatbot retains conversation history across turns
 - **Hybrid search** — Combine dense + sparse vector search for better retrieval of both numeric and textual supplier data
